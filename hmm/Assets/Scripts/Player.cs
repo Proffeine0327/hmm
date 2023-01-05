@@ -4,23 +4,27 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private float moveSpeed;
     [SerializeField] private float angle;
     [SerializeField] private float angleSpeed;
-    [SerializeField] private float angleGravity;
-    [SerializeField] private float inputAmount;
     [SerializeField] private GameObject upmouth;
     [SerializeField] private GameObject downmouth;
     [SerializeField] private GameObject body;
 
+    private float inputAmount = 0.015f;
+    private float angleGravity = 1.8f;
+
     void Start()
     {
-        angle = 0.1f;
+        angle = 1;
+        angleGravity = 0.015f;
+        inputAmount = 1.8f;
     }
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.LeftArrow)) angleSpeed += inputAmount;
-        if (Input.GetKey(KeyCode.RightArrow)) angleSpeed += -inputAmount;
+        if (Input.GetKey(KeyCode.LeftArrow)) angleSpeed += inputAmount * Time.deltaTime;
+        if (Input.GetKey(KeyCode.RightArrow)) angleSpeed += -inputAmount * Time.deltaTime;
 
         if (Mathf.Abs(angle) < 90) angleSpeed += (angle * angleGravity) * Time.deltaTime;
         angle += angleSpeed;
@@ -38,5 +42,8 @@ public class Player : MonoBehaviour
         }
 
         body.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        angleGravity += 0.0005f * Time.deltaTime;
+        inputAmount += 0.03333333f * Time.deltaTime;
     }
 }
