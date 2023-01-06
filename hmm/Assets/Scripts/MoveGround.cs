@@ -6,17 +6,20 @@ public class MoveGround : MonoBehaviour
 {
     [SerializeField] private float width;
     public float moveSpeed;
-    
+
     private float startposx;
 
-    private void Start() 
+    private void Start()
     {
-        startposx = transform.position.x;    
+        startposx = transform.position.x;
     }
 
     void Update()
     {
-        if(Mathf.Abs(startposx - transform.position.x) > width) transform.Translate(Vector3.right * width);
-        transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+        if (Player.IsPlaying)
+        {
+            if (Mathf.Abs(startposx - transform.position.x) > width) transform.Translate(Vector3.right * width);
+            transform.Translate(Vector3.left * moveSpeed * Time.deltaTime * (1 / Player.MoveTime));
+        }
     }
 }

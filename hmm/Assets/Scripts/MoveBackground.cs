@@ -11,16 +11,19 @@ public class MoveBackground : MonoBehaviour
     private float moveSpeed;
     private float randomSpawnTime;
 
-    private void Update() 
+    private void Update()
     {
-        if(transform.position.x <= disablePosX)
+        if (Player.IsPlaying)
         {
-            transform.position = new Vector3(spawnPosX, Random.Range(spawnPosYRange.x, spawnPosYRange.y), transform.position.z);
-            randomSpawnTime = Random.Range(1,4);
-            moveSpeed = Random.Range(0.001f, 0.01f);
-        }
+            if (transform.position.x <= disablePosX)
+            {
+                transform.position = new Vector3(spawnPosX, Random.Range(spawnPosYRange.x, spawnPosYRange.y), transform.position.z);
+                randomSpawnTime = Random.Range(1, 4);
+                moveSpeed = Random.Range(0.001f, 0.01f);
+            }
 
-        if(randomSpawnTime > 0) randomSpawnTime -= Time.deltaTime;
-        else transform.Translate(Vector3.left * moveSpeed);
+            if (randomSpawnTime > 0) randomSpawnTime -= Time.deltaTime;
+            else transform.Translate(Vector3.left * moveSpeed);
+        }
     }
 }
